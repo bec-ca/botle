@@ -1,0 +1,8 @@
+-ggdb3
+-std=c++17
+-Wall
+-Werror
+-iquote
+./src/
+-D_GLIBCXX_DEBUG
+-D_DESKTOP

@@ -1,0 +1,38 @@
+CXXFLAGS=-O3 -flto -march=native -fomit-frame-pointer
+# CXXFLAGS=-gsource-map
+
+CXXFLAGS+= -D_WASM
+CXXFLAGS+= -std=c++17 -iquote ./src/
+CXXFLAGS+= -Wall -Werror -Wextra
+
+LD_FLAGS=-s MODULARIZE -s EXPORT_NAME=startEngine -s ASSERTIONS=1 -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap", "allocate", "intArrayFromString"]'  -s ALLOW_MEMORY_GROWTH=1  -s SINGLE_FILE=1 -s NO_DISABLE_EXCEPTION_CATCHING 
+LD_FLAGS+= -s ENVIRONMENT=web
+CXX=em++
+
+SOURCES=$(shell find src/engine src/utils src/wasm | grep '\.cpp$$')
+OBJECTS=$(patsubst %.cpp, %.wo, $(SOURCES))
+BOTLE ?= ./build/wasm/botle.js
+SHELL=/bin/bash
+ALL_DEPS=$(shell find .wdeps -type f 2> /dev/null)
+
+.PHONY: all build clean
+
+all: $(BOTLE)
+
+$(BOTLE): $(OBJECTS)
+	@echo "Linking $@"
+	@mkdir -p `dirname $@`
+	@$(CXX) $(OBJECTS) -o $@ $(CXXFLAGS) $(LD_FLAGS)
+	@mkdir -p www/src/engine
+	@cp ./build/wasm/* www/src/engine/
+
+-include $(ALL_DEPS)
+
+%.wo: %.cpp Makefile.wasm
+	@mkdir -p `dirname .wdeps/$<.dep`
+	@echo "Building $@"
+	@$(CXX) $(CXXFLAGS) -MMD -MF .wdeps/$<.dep  -c $< -o $@
+
+
+clean:
+	rm -rf $(BOTLE) $(OBJECTS) .wdeps
