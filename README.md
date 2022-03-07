@@ -14,3 +14,6 @@ The engine was written in C++, the GUI was written in reacjs. There is a cache
 of precomputed solutions for the first word of each configuration. From the
 second word and on, the best word is computed locally using the C++ engine
 compiled to wasm.
+
+You can also run the engine from the command line, however, it is certainly
+easier to use the GUI.
