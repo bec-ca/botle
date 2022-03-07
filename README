@@ -1,0 +1,7 @@
+This is my take on writing a wordle solver using mini-max search. I was
+somewhat familiar with how chess engines work and I decided to apply a similar
+algorithm for wordle, which may sound like it is a completely kind of game.
+
+A writeup about the approach can be found at: https://medium.com/p/31601a5dbb42
+
+If you want to try the solver, it is hosted at: https://bekyblog.tech/wordle-solver/
