@@ -8,17 +8,22 @@ let word_lists = {
   en_words: "./word_lists/en-words.dict",
   pt_secret_words: "./word_lists/pt-secret-words.dict",
   pt_words: "./word_lists/pt-words.dict",
+  letreco_words: "./word_lists/letreco-words.dict",
+  letreco_secrets: "./word_lists/letreco-secrets.dict",
   pt_xingo: "./word_lists/xingo-words.dict",
+  pt_super_senha: "./word_lists/super-senha.dict",
+  pt_palavra_do_dia: "./word_lists/palavra-do-dia.dict",
+  pt_palavra_do_dia_secrets: "./word_lists/palavra-do-dia-secrets.dict",
 }
 
 export function get_allowed_guesses_filename(dict) {
   switch (dict) {
     case 'wordle':
-    case 'wordle-secret':
       return word_lists.en_words;
     case 'termoo':
-    case 'termoo-secrets':
       return word_lists.pt_words;
+    case 'letreco':
+      return word_lists.letreco_words;
     case 'wiki-2k':
       return word_lists.en_wiki_2k;
     case 'wiki-4k':
@@ -27,28 +32,34 @@ export function get_allowed_guesses_filename(dict) {
       return word_lists.en_wiki_10k;
     case 'xingo':
       return word_lists.pt_xingo;
+    case 'super-senha':
+      return word_lists.pt_super_senha;
+    case 'palavra-do-dia':
+      return word_lists.pt_palavra_do_dia;
     default:
-      throw new Error("Bug");
+      throw new Error("Unknown dictionary " + dict);
   }
 }
 
 export function get_possible_secrets_filename(dict) {
   switch (dict) {
     case 'wordle':
-      return null;
-    case 'wordle-secret':
       return word_lists.en_secret_words;
     case 'termoo':
-      return null;
-    case 'termoo-secrets':
       return word_lists.pt_secret_words;
+    case 'letreco':
+      return word_lists.letreco_secrets;
     case 'wiki-2k':
     case 'wiki-4k':
     case 'wiki-10k':
       return null;
     case 'xingo':
       return null;
+    case 'super-senha':
+      return null;
+    case 'palavra-do-dia':
+      return word_lists.pt_palavra_do_dia_secrets;
     default:
-      throw new Error("Bug");
+      throw new Error("Unknown dictionary " + dict);
   }
 }

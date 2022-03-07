@@ -1,5 +1,7 @@
 #include "hash.hpp"
 
+#include "small_hash.hpp"
+
 #include <cassert>
 
 using namespace std;
@@ -38,14 +40,6 @@ struct Block {
   array<uint64_t, 4> _data{0, 0, 0, 0};
   size_t _size = 0;
 };
-
-uint64_t hash64(uint64_t x)
-{
-  x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ull;
-  x = (x ^ (x >> 27)) * 0x94d049bb133111ebull;
-  x = x ^ (x >> 31);
-  return x;
-}
 
 char hex_char(int value)
 {

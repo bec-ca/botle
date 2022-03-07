@@ -66,6 +66,9 @@ OrError<WordInfo> run_word(
   auto update_strategy = [&](WordInfo&& info) {
     if (!best_strategy.has_value() || is_better_than(info, *best_strategy)) {
       best_strategy = move(info);
+    } else {
+      best_strategy->avg_guesses = min(best_strategy->avg_guesses, info.avg_guesses);
+      best_strategy->max_depth = max(best_strategy->max_depth, info.max_depth);
     }
   };
 

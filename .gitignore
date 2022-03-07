@@ -1,0 +1,8 @@
+*.o
+*.wo
+.deps
+.wdeps
+botle
+*txt
+*xml
+build

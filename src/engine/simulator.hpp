@@ -10,7 +10,6 @@
 
 struct WordInfo {
   InternalString first_guess;
-  int sum_num_guesses;
   double avg_guesses;
   int worst_num_guesses;
   std::map<int, int> guess_distribution;

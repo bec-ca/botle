@@ -49,6 +49,8 @@ struct GameState {
   GameState state_from_partition(const Partition& partition) const;
 
  private:
+  void drop_useless_guesses();
+
   WordList _allowed_guesses;
   WordList _possible_secrets;
   bool _hard_mode;

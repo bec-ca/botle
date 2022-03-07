@@ -61,23 +61,29 @@ struct State {
 
     sort_guesses();
     _reset_thinking();
+
+    print_line(
+      "Remaining guesses: $ Remaining secrets: $",
+      _game_state.allowed_guesses().size(),
+      _game_state.possible_secrets().size());
   }
 
   OrError<optional<WordInfo>> compute_next_suggestion()
   {
+    bool should_add_new_word = _added_new_word_counter < 8;
     if (
-      _thinking_words.size() < 100 &&
+      _thinking_words.size() < 20 &&
       _next_thinking_word < _game_state.allowed_guesses().size() &&
-      (!_added_new_word_last || _thinking_words.empty())) {
+      (should_add_new_word || _thinking_words.empty())) {
       _thinking_words.push({
         .word = _game_state.allowed_guesses().at(_next_thinking_word),
         .max_depth = 1,
         .best_avg_guess = 0,
       });
       _next_thinking_word++;
-      _added_new_word_last = true;
+      _added_new_word_counter++;
     } else {
-      _added_new_word_last = false;
+      _added_new_word_counter = 0;
     }
 
     if (_thinking_words.empty()) { return nullopt; }
@@ -116,7 +122,7 @@ struct State {
 
   priority_queue<WordState> _thinking_words;
   size_t _next_thinking_word = 0;
-  bool _added_new_word_last = false;
+  int _added_new_word_counter = 0;
 
   GameState _game_state;
   CachePair _cache_pair;

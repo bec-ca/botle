@@ -1,7 +1,9 @@
 #include "greedy.hpp"
 
 #include "match.hpp"
+#include "utils/small_hash.hpp"
 
+#include <algorithm>
 #include <array>
 #include <string.h>
 
@@ -30,6 +32,30 @@ pair<int, InternalString> worst_remaining_possible_after_one_guess(
     }
   }
   return make_pair(worst_remaining_secrets, *worst_secret);
+}
+
+uint32_t hash_remaining_secrets(
+  const InternalString guess_candidate,
+  const vector<InternalString>& possible_secrets)
+{
+  assert(possible_secrets.size() > 0);
+
+  array<uint32_t, 256> buckets;
+  for (auto& b : buckets) b = 0;
+  for (const auto& possible_secret : possible_secrets) {
+    auto r = Match::match(guess_candidate, possible_secret);
+    if (guess_candidate == possible_secret) continue;
+    auto& bucket = buckets.at(r.code());
+    bucket = hash32(bucket ^ hash32(possible_secret.id()));
+  }
+  sort(buckets.begin(), buckets.end());
+
+  uint32_t hash = 0;
+  for (size_t i = 0; i < buckets.size(); i++) {
+    const auto& b = buckets[i];
+    hash = hash32(hash ^ b);
+  }
+  return hash;
 }
 
 SearchResult pick_greedy_guess(

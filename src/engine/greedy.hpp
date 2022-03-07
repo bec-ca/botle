@@ -22,3 +22,7 @@ SearchResult pick_greedy_guess(
   const std::vector<InternalString>& allowed_guesses,
   const std::vector<InternalString>& possible_secrets,
   int beta);
+
+uint32_t hash_remaining_secrets(
+  const InternalString guess_candidate,
+  const std::vector<InternalString>& possible_secrets);

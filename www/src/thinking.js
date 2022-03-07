@@ -1,4 +1,5 @@
 import React from 'react';
+import get_text from './translations';
 
 import {
   get_allowed_guesses_filename,
@@ -41,7 +42,6 @@ async function fetch_cache(key) {
 export default class Thinking extends React.Component {
   constructor(props) {
     super(props);
-    let dict = props.dict;
     this.state = {
       allowed_guesses: null,
       possible_secrets: null,
@@ -49,8 +49,6 @@ export default class Thinking extends React.Component {
       word_infos: {},
       dict_loaded: false,
       thinking_word: null,
-      allowed_guesses_filename: get_allowed_guesses_filename(dict),
-      possible_secrets_filename: get_possible_secrets_filename(dict),
       thinking_done: false,
       last_best: null,
     };
@@ -166,10 +164,13 @@ export default class Thinking extends React.Component {
 
   async prepare_engine() {
     if (!this.state.dict_loaded) {
-      let allowed_guesses = await fetch_lines(this.state.allowed_guesses_filename);
+      let dict = this.props.dict;
+      let allowed_guesses_filename = get_allowed_guesses_filename(dict);
+      let possible_secrets_filename = get_possible_secrets_filename(dict);
+      let allowed_guesses = await fetch_lines(allowed_guesses_filename);
       let possible_secrets = [];
-      if (this.state.allowed_guesses_filename) {
-        possible_secrets = await fetch_lines(this.state.possible_secrets_filename);
+      if (this.props.use_secret_words && possible_secrets_filename) {
+        possible_secrets = await fetch_lines(possible_secrets_filename);
       }
 
       this.props.engine.load_dict(allowed_guesses, possible_secrets, this.props.hard_mode);
@@ -194,7 +195,7 @@ export default class Thinking extends React.Component {
     return best_words.map((word) => {
       return (
         <tr key={word['guess']} onClick={() => this.props.on_selection_change(word)}>
-          <td className="guess-cell">{word['guess']}</td>
+          <td className="guess-cell">{word['guess'].toLowerCase()}</td>
           <td className="avg-guess-cell">{word['avg_guesses'].toFixed(4)}</td>
           <td className="worst-guesses-cell">{word['worst_num_guesses']}</td>
           <td className="search-depth-cell">{word['max_depth']}</td>
@@ -205,11 +206,11 @@ export default class Thinking extends React.Component {
 
   render_header() {
     if (this.state.thinking_done) {
-      return <div className="search-depth">Done</div>
+      return <div className="search-depth">{get_text("done")}</div>
     } else if (!this.state.thinking_word) {
-      return <div className="search-depth">Initializing...</div>;
+      return <div className="search-depth">{get_text("initializing")}</div>;
     } else {
-      return <div className="search-depth">Thinking...</div>;
+      return <div className="search-depth">{get_text("thinking")}</div>;
     }
   }
 
@@ -220,10 +221,10 @@ export default class Thinking extends React.Component {
         <table>
           <thead>
             <tr>
-              <th className='guess-cell'>Word</th>
-              <th className='avg-guess-cell'>Avg</th>
-              <th className='worst-guesses-cell'>Worst</th>
-              <th className='search-depth-cell'>Depth</th>
+              <th className='guess-cell'>{get_text('word')}</th>
+              <th className='avg-guess-cell'>{get_text('avg')}</th>
+              <th className='worst-guesses-cell'>{get_text('worst')}</th>
+              <th className='search-depth-cell'>{get_text('depth')}</th>
             </tr>
           </thead>
           <tbody>

@@ -82,6 +82,22 @@ const WordList& GameState::possible_secrets() const
   return _possible_secrets;
 }
 
+void GameState::drop_useless_guesses()
+{
+  if (!_hard_mode) {
+    set<uint32_t> seen_hashes;
+
+    vector<InternalString> filtered;
+    for (InternalString word : _allowed_guesses) {
+      auto hash = hash_remaining_secrets(word, _possible_secrets);
+      if (seen_hashes.find(hash) != seen_hashes.end()) { continue; }
+      seen_hashes.insert(hash);
+      filtered.push_back(word);
+    }
+    _allowed_guesses = move(filtered);
+  }
+}
+
 OrError<Unit> GameState::make_guess(InternalString guess, Match match)
 {
   bool has_guess = false;
@@ -103,6 +119,7 @@ OrError<Unit> GameState::make_guess(InternalString guess, Match match)
   if (_hard_mode) {
     _allowed_guesses = match.eliminate_words(_allowed_guesses, guess);
   }
+  drop_useless_guesses();
 
   return unit;
 }
@@ -187,8 +204,10 @@ array<Partition, 256> GameState::partition_by_pattern(
 
 GameState GameState::state_from_partition(const Partition& partition) const
 {
-  return GameState(
+  auto state = GameState(
     _hard_mode ? partition._allowed_guesses : _allowed_guesses,
     partition._possible_secrets,
     _hard_mode);
+  state.drop_useless_guesses();
+  return state;
 }

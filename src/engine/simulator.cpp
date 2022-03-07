@@ -107,7 +107,6 @@ OrError<WordInfo> Simulator::simulate(
 
   return WordInfo{
     .first_guess = first_guess,
-    .sum_num_guesses = sum_num_guesses,
     .avg_guesses =
       double(sum_num_guesses) / game_state.possible_secrets().size(),
     .worst_num_guesses = worst_num_guesses,
