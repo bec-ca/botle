@@ -8,6 +8,8 @@ A writeup about the approach can be found at: https://medium.com/p/31601a5dbb42
 
 If you want to try the solver, it is hosted at: https://bekyblog.tech/wordle-solver/
 
+It is caled botle, because it is a BOT that solves wordLE.
+
 ## Some technical details
 
 The engine was written in C++, the GUI was written in reacjs. There is a cache
