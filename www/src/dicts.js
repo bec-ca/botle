@@ -48,7 +48,7 @@ export function get_possible_secrets_filename(dict) {
     case 'termoo':
       return word_lists.pt_secret_words;
     case 'letreco':
-      return word_lists.letreco_secrets;
+      return null;
     case 'wiki-2k':
     case 'wiki-4k':
     case 'wiki-10k':

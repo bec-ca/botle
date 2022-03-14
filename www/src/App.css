@@ -178,6 +178,13 @@
   flex-grow: 1;
 }
 
+.thinking-container-outer {
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
 /*
  * Playing mobile
  */
@@ -203,6 +210,7 @@
   flex-grow: 1;
   flex-basis: 0;
   overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .top-mobile {

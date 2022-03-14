@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function run() {
 
@@ -70,8 +70,8 @@ function run() {
 }
 
 echo "Running easy mode"
-run
+# run
 
 echo "Running hard mode"
-run --hard-mode
+run --hard
 
