@@ -13,17 +13,30 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-wrapper {
+  flex-grow: 2;
+  flex-shrink: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .app {
   text-align: center;
   background-color: #282c34;
   padding: 20px;
-  display: block;
   color: white;
   overflow: hidden;
-  height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 2;
+  flex-shrink: 2;
 }
 
 .app-mobile {
@@ -34,18 +47,26 @@
   font-size: 28px;
 }
 
+.github-link {
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  float: right;
+}
+
 /*
  * Selector
  */
 
 .selector {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
   gap: 10px;
+  flex-grow: 2;
+  flex-shrink: 2;
 }
 
 .dropdown-label {
@@ -123,17 +144,16 @@
 .playing-container {
   display: flex;
   flex-direction: row;
-  overflow-y: hidden;
+  overflow: hidden;
   align-content: flex-start;
-  height: 100%;
+  align-content: stretch;
 }
 
 .left-container {
-  flex-grow: 2;
+  flex-grow: 1;
+  flex-shrink: 1;
   overflow-y: scroll;
   scrollbar-width: none;
-  margin: auto;
-  height: 100%;
 }
 
 .top {
@@ -155,7 +175,7 @@
 }
 
 .back-button {
-  margin: 50px 0 0 50px;
+  margin: 50px 0 0 150px;
   width: 80px;
 }
 
@@ -185,6 +205,14 @@
   scrollbar-width: none;
 }
 
+.thinking-container {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 30px 0 0;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 /*
  * Playing mobile
  */
@@ -198,11 +226,12 @@
 }
 
 .body-mobile-container {
-  scrollbar-width: none;
   flex-shrink: 1;
   flex-grow: 1;
   flex-basis: 0;
   overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 .thinking-container-outer-mobile {
@@ -212,6 +241,14 @@
   overflow-y: scroll;
   scrollbar-width: none;
 }
+
+.thinking-container-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 
 .top-mobile {
   display: flex;
@@ -360,16 +397,6 @@ tr:hover {
   height: 18px;
 }
 
-.thinking-container {
-  display: flex;
-  flex-direction: column;
-  padding: 50px 30px 0 0;
-  align-items: center;
-  flex-shrink: 0;
-  overflow-y: scroll;
-  scrollbar-width: none;
-}
-
 .search-depth {
   font-size: 14px;
   padding: 5px;
@@ -378,4 +405,62 @@ tr:hover {
 
 .instructions {
   margin: 10px;
+}
+
+/* fork on github */
+
+#forkongithub a {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  font-family: arial, sans-serif;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 40px;
+  font-size: 1rem;
+  line-height: 2rem;
+  position: relative;
+  transition: 0.5s;
+}
+
+#forkongithub a::before,
+#forkongithub a::after {
+  content: "";
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 1px;
+  background: #fff;
+}
+
+#forkongithub a::after {
+  bottom: 1px;
+  top: auto;
+}
+
+@media screen and (min-width:800px) {
+  #forkongithub {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 200px;
+    overflow: hidden;
+    height: 200px;
+    z-index: 9999;
+  }
+  #forkongithub a {
+    width: 200px;
+    position: absolute;
+    top: 60px;
+    left: -60px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+  }
 }

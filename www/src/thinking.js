@@ -1,5 +1,6 @@
 import React from 'react';
 import get_text from './translations';
+import is_mobile from './device';
 
 import {
   get_allowed_guesses_filename,
@@ -100,7 +101,7 @@ export default class Thinking extends React.Component {
         }
         return 0
       });
-      if(new_best_words.length > 50) {
+      if (new_best_words.length > 50) {
         new_best_words = new_best_words.slice(0, 50);
       }
       let new_best = new_best_words[0];
@@ -206,7 +207,7 @@ export default class Thinking extends React.Component {
 
   render_header() {
     if (this.state.thinking_done) {
-      return <div className="search-depth">{get_text("done")}</div>
+      return <div className="search-depth">{get_text("thinking done")}</div>
     } else if (!this.state.thinking_word) {
       return <div className="search-depth">{get_text("initializing")}</div>;
     } else {
@@ -215,8 +216,9 @@ export default class Thinking extends React.Component {
   }
 
   render() {
+    let className = is_mobile() ? "thinking-container-mobile" : "thinking-container";
     return (
-      <div className="thinking-container">
+      <div className={className}>
         {this.render_header()}
         <table>
           <thead>

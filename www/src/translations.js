@@ -12,8 +12,9 @@ let pt = {
   'worst': 'Pior',
   'depth': 'Profundidade',
   'done': 'Pronto',
+  'thinking done': 'Analise completa',
   'initializing': 'Iniciando...',
-  'thinking': 'Pensando...',
+  'thinking': 'Analizando...',
 }
 
 let en = {
@@ -30,6 +31,7 @@ let en = {
   'worst': 'Worst',
   'depth': 'Depth',
   'done': 'Done',
+  'thinking done': 'Thinking done',
   'initializing': 'Initializing...',
   'thinking': 'Thinking...',
 }

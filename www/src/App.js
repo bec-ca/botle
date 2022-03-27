@@ -259,7 +259,10 @@ class App extends React.Component {
     return (
       <div className="wrapper">
         <div className={"app " + this.app_class_name()}>
-          <Selector api={this.state.api} engine={this.props.engine} />
+          <span id="forkongithub"><a href="https://github.com/bec-ca/botle">Fork me on GitHub</a></span>
+          <div className="app-wrapper">
+            <Selector api={this.state.api} engine={this.props.engine} />
+          </div>
         </div>
       </div>
     );
