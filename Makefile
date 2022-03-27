@@ -18,7 +18,7 @@ ALL_DEPS=$(shell find .deps -type f 2> /dev/null)
 
 .PHONY: all build clean wasm botle default
 
-default: all
+default: botle
 
 all: botle wasm
 
